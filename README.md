@@ -9,7 +9,7 @@
 <img width="70" height="70" alt="angular-svgrepo-com" src="https://github.com/user-attachments/assets/76e71585-f3f5-4aa2-958c-a83a8c3897d0"/>
 <img width="70" height="70" alt="spring-icon-svgrepo-com (1)" src="https://github.com/user-attachments/assets/5e1b7bab-5824-4faa-a939-a61736637466" />
 <img width="70" height="70" alt="pgsql-svgrepo-com" src="https://github.com/user-attachments/assets/f6e212ad-63a1-4215-9645-b8546171a580" />
-<img width="70" height="70" alt="Captura_de_tela_2025-10-28_222347-removebg-preview" src="https://github.com/user-attachments/assets/041f4539-5134-471c-b1d7-af3fdf59a225" />
+<img width="120" height="120" alt="Captura_de_tela_2025-10-28_222347-removebg-preview" src="https://github.com/user-attachments/assets/041f4539-5134-471c-b1d7-af3fdf59a225" />
 
 
 ---
