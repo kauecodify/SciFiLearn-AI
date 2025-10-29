@@ -44,7 +44,7 @@ O projeto é facilmente executável via Docker Compose, permitindo subir banco, 
 
 # FrontEnd
 
-<img width="1190" height="654" alt="image" src="https://github.com/user-attachments/assets/0556c57b-e910-4273-b950-04a6c50dd5de" />
+<img width="1196" height="650" alt="image" src="https://github.com/user-attachments/assets/d1e41792-b9d4-4820-b054-ea8ec76cdb6e" />
 
 ---
 
