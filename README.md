@@ -80,6 +80,10 @@ Acesse pelos links >>>
 
 # Integrando Ministral e Ollama
 
+SciFiLearn/backend-springboot/src/main/resources >> alterar chave em application.properties
+
+melhorias em breve...
+
 ![ea-ea-sports](https://github.com/user-attachments/assets/e6b6a17b-bc8a-4d68-bf80-8e5f390f7a58)
 
 ---
