@@ -32,6 +32,10 @@ O projeto é facilmente executável via Docker Compose, permitindo subir banco, 
 
 ---
 
+# Projeto pronto para Deploy ...
+
+---
+
 # Estrutura do Projeto
 
 <img width="375" height="351" alt="image" src="https://github.com/user-attachments/assets/01eb6a94-7573-4640-935c-5a37b679e511" />
