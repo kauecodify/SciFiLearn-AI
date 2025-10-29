@@ -50,6 +50,32 @@ O projeto é facilmente executável via Docker Compose, permitindo subir banco, 
 
 # Como utilizar o BackEnd
 
+⚠️ Antes de buildar, rode
+
+<img width="269" height="90" alt="image" src="https://github.com/user-attachments/assets/6ef86309-2b2d-44b1-a1e3-9369b23fe9d4" />
+
+dentro de backend-springboot para gerar o backend.jar.
+
+Apos...
+
+---
+
+# Run
+
+Navegue até a raiz do projeto (SciFiLearn/)
+
+Build e up de todos os containers:
+
+<img width="276" height="149" alt="image" src="https://github.com/user-attachments/assets/058eb968-7dee-4577-9046-4a8781ff02f5" />
+
+Acesse pelos links >>>
+
+...
+
+---
+
+# Integrando Ministral e Ollama
+
 ![ea-ea-sports](https://github.com/user-attachments/assets/e6b6a17b-bc8a-4d68-bf80-8e5f390f7a58)
 
 ---
