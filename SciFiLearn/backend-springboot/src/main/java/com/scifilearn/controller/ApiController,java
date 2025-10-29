@@ -1,5 +1,3 @@
-// controller para chat IA e upload
-
 package com.scifilearn.controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -10,23 +8,30 @@ import java.util.*;
 @RequestMapping("/api")
 public class ApiController {
 
-    @PostMapping("/ai/chat")
-    public Map<String, String> chat(@RequestBody Map<String, String> payload) {
-        String message = payload.get("message");
-        // integrar Mistral ou Ollama
-        String answer = "Resposta simulada para: " + message;
-        Map<String,String> res = new HashMap<>();
-        res.put("answer", answer);
-        return res;
-    }
+    private List<Map<String,Object>> books = new ArrayList<>();
 
     @PostMapping("/admin/books")
-    public Map<String,String> upload(@RequestParam("file") MultipartFile file,
-                                     @RequestParam("title") String title,
-                                     @RequestParam("authors") String authors) {
-        // save no arquivo ou processar...
-        Map<String,String> res = new HashMap<>();
-        res.put("pdfUrl","/pdfs/"+file.getOriginalFilename());
-        return res;
+    public Map<String,Object> uploadBook(@RequestParam String title,
+                                         @RequestParam String authors,
+                                         @RequestParam MultipartFile file){
+        Map<String,Object> book = new HashMap<>();
+        book.put("id", UUID.randomUUID().toString());
+        book.put("title", title);
+        book.put("authors", Arrays.asList(authors.split(",")));
+        book.put("pdfUrl", "/pdfs/"+file.getOriginalFilename());
+        books.add(book);
+        return book;
+    }
+
+    @PostMapping("/ai/chat")
+    public Map<String,String> chat(@RequestBody Map<String,String> payload){
+        String message = payload.get("message");
+        // Mistral/Ollama via HTTP
+        return Map.of("answer","Resposta adaptada (AI): "+message);
+    }
+
+    @GetMapping("/admin/books")
+    public List<Map<String,Object>> getBooks(){
+        return books;
     }
 }
