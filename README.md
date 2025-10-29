@@ -74,7 +74,9 @@ Build e up de todos os containers:
 
 Acesse pelos links >>>
 
-...
+Frontend: http://localhost
+
+Backend: http://localhost:8080
 
 ---
 
@@ -82,8 +84,24 @@ Acesse pelos links >>>
 
 SciFiLearn/backend-springboot/src/main/resources >> alterar chave em application.properties
 
+---
+
+# Teste
+
+Clique em IA ASSISTENTE no menu lateral.
+
+Escreva uma pergunta (ex.: “Explique o paradoxo de Fermi”).
+
+Você verá:
+
+<img width="268" height="159" alt="image" src="https://github.com/user-attachments/assets/2b209dd7-8d4c-4de4-96db-335c7b7af677" />
+
+---
+
 melhorias em breve...
 
 ![ea-ea-sports](https://github.com/user-attachments/assets/e6b6a17b-bc8a-4d68-bf80-8e5f390f7a58)
 
----
+Mit Licence
+
+by k
