@@ -1,1 +1,1289 @@
-...
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SciFiLearn Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg:#0a0f1a; 
+  --card:#131a2b; 
+  --accent:#6ee7b7; 
+  --muted:#a0aabb; 
+  --radius:12px;
+  --font:'Orbitron', 'Exo 2', 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --danger:#f87171;
+  --warning:#fbbf24;
+  --success:#34d399;
+  --circuit:rgba(110, 231, 183, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: #e0e5f2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(110, 231, 183, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(110, 231, 183, 0.03) 0%, transparent 20%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(10, 15, 26, 0.7), rgba(10, 15, 26, 0.7)),
+    repeating-linear-gradient(0deg, transparent, transparent 49px, var(--circuit) 49px, var(--circuit) 50px),
+    repeating-linear-gradient(90deg, transparent, transparent 49px, var(--circuit) 49px, var(--circuit) 50px);
+  z-index: -1;
+}
+
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-content {
+  max-width: 600px;
+  background: rgba(19, 26, 43, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--accent);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-content::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle, rgba(110, 231, 183, 0.1) 0%, transparent 70%);
+  z-index: -1;
+}
+
+.welcome-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(110, 231, 183, 0.7);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.welcome-content p {
+  margin-bottom: 30px;
+  line-height: 1.6;
+  color: var(--muted);
+  font-family: 'Exo 2', var(--font);
+}
+
+.role-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.role-btn {
+  padding: 15px 30px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Orbitron', var(--font);
+}
+
+.role-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(110, 231, 183, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.role-btn:hover::before {
+  opacity: 1;
+}
+
+.role-btn.admin {
+  color: var(--accent);
+  box-shadow: 0 0 15px rgba(110, 231, 183, 0.3);
+}
+
+.role-btn.user {
+  color: #d8b4fe;
+  border-color: #d8b4fe;
+  box-shadow: 0 0 15px rgba(216, 180, 254, 0.3);
+}
+
+.role-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(110, 231, 183, 0.5);
+}
+
+.role-btn.user:hover {
+  box-shadow: 0 0 20px rgba(216, 180, 254, 0.5);
+}
+
+header {
+  padding: 16px 24px;
+  background: linear-gradient(90deg, #0f1724, #071021);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  border-bottom: 1px solid var(--accent);
+}
+
+header h1 {
+  font-size: 22px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 0 0 5px rgba(110, 231, 183, 0.5);
+  letter-spacing: 1px;
+}
+
+header button {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #021019;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-family: 'Orbitron', var(--font);
+}
+
+header button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(110, 231, 183, 0.5);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+}
+
+.user-info i {
+  color: var(--accent);
+}
+
+.app-shell {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.sidebar {
+  width: 280px;
+  background: var(--card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
+  transition: 0.3s;
+  border-right: 1px solid rgba(110, 231, 183, 0.3);
+  position: relative;
+}
+
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(90deg, transparent, transparent 49px, var(--circuit) 49px, var(--circuit) 50px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.sidebar h2 {
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Orbitron', var(--font);
+}
+
+.sidebar button {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 12px 16px;
+  text-align: left;
+  width: 100%;
+  border-radius: 8px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  font-family: 'Exo 2', var(--font);
+}
+
+.sidebar button:hover {
+  background: rgba(110, 231, 183, 0.1);
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.3);
+}
+
+.sidebar button.active {
+  background: rgba(110, 231, 183, 0.15);
+  color: var(--accent);
+  font-weight: 600;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(110, 231, 183, 0.2);
+}
+
+.main {
+  flex: 1;
+  background: var(--bg);
+  padding: 20px;
+  overflow: auto;
+  transition: 0.3s;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(110, 231, 183, 0.5);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Orbitron', var(--font);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(110, 231, 183, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(110, 231, 183, 0.4);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', var(--font);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: auto;
+  font-family: 'Exo 2', var(--font);
+}
+
+.table-container {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow: auto;
+  max-height: 500px;
+  border: 1px solid rgba(110, 231, 183, 0.2);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+  color: var(--accent);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  font-family: 'Orbitron', var(--font);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+td {
+  color: #e0e5f2;
+  font-family: 'Exo 2', var(--font);
+}
+
+.action-btn {
+  background: var(--accent);
+  color: #021019;
+  padding: 6px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-family: 'Orbitron', var(--font);
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(110, 231, 183, 0.5);
+}
+
+.delete-btn {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+.edit-btn {
+  background: var(--warning);
+  color: #021019;
+  border-color: var(--warning);
+}
+
+.book-cover {
+  width: 60px;
+  height: 80px;
+  background: linear-gradient(135deg, #1e3a5f, #0f1724);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.book-cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(110, 231, 183, 0.2) 4px, rgba(110, 231, 183, 0.2) 5px),
+    repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(110, 231, 183, 0.2) 4px, rgba(110, 231, 183, 0.2) 5px);
+  opacity: 0.3;
+}
+
+.chat-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 49px, var(--circuit) 49px, var(--circuit) 50px),
+    repeating-linear-gradient(90deg, transparent, transparent 49px, var(--circuit) 49px, var(--circuit) 50px);
+  border-radius: 8px;
+}
+
+.msg {
+  padding: 12px 16px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-break: break-word;
+  transition: 0.2s;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+  font-family: 'Exo 2', var(--font);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #1e293b, #0b1220);
+  border-bottom-right-radius: 4px;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+}
+
+.msg.bot {
+  align-self: flex-start;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(110, 231, 183, 0.2);
+}
+
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e5f2;
+  font-size: 1rem;
+  font-family: 'Exo 2', var(--font);
+}
+
+.chat-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(110, 231, 183, 0.3);
+}
+
+.chat-form button {
+  padding: 12px 20px;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.upload-container input,
+.upload-container textarea {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e5f2;
+  font-size: 1rem;
+  font-family: 'Exo 2', var(--font);
+}
+
+.upload-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.file-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.file-input-container input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-input-label {
+  display: block;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  border: 1px dashed rgba(110, 231, 183, 0.5);
+  font-family: 'Exo 2', var(--font);
+}
+
+.file-input-label:hover {
+  background: rgba(110, 231, 183, 0.1);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.user-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.user-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(110, 231, 183, 0.2);
+}
+
+.user-card h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Orbitron', var(--font);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.book-item {
+  display: flex;
+  gap: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: all 0.2s;
+  border: 1px solid rgba(110, 231, 183, 0.1);
+}
+
+.book-item:hover {
+  background: rgba(110, 231, 183, 0.1);
+  transform: translateX(5px);
+  border-color: rgba(110, 231, 183, 0.3);
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-info h4 {
+  margin-bottom: 5px;
+  color: white;
+  font-family: 'Exo 2', var(--font);
+}
+
+.book-info p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-family: 'Exo 2', var(--font);
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+  }
+  
+  .sidebar button {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+  
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .chat-panel {
+    height: 400px;
+  }
+  
+  th,
+  td {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .book-cover {
+    width: 50px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  .role-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .role-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .welcome-content {
+    padding: 30px 20px;
+  }
+  
+  .welcome-content h1 {
+    font-size: 2rem;
+  }
+  
+  .user-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <h1><i class="fas fa-robot"></i> SCIFILEARN ADMIN</h1>
+      <p>Sistema de gerenciamento de biblioteca de ficção científica. Selecione seu nível de acesso:</p>
+      <div class="role-buttons">
+        <button class="role-btn admin" onclick="setRole('admin')">
+          <i class="fas fa-user-shield"></i> ACESSO ADMINISTRATIVO
+        </button>
+        <button class="role-btn user" onclick="setRole('user')">
+          <i class="fas fa-book-reader"></i> TERMINAL DE USUÁRIO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainApp" style="display: none; width: 100%;">
+    <header>
+      <h1><i class="fas fa-book"></i> SCIFILEARN ADMIN</h1>
+      <div class="user-info">
+        <i class="fas fa-user"></i>
+        <span id="currentRole">ADMIN</span>
+        <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> SAIR</button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <h2>SISTEMA</h2>
+        <button onclick="showSection('dashboard')"><i class="fas fa-home"></i> DASHBOARD</button>
+        <button onclick="showSection('users')"><i class="fas fa-users"></i> USUÁRIOS</button>
+        <button onclick="showSection('books')"><i class="fas fa-book"></i> LIVROS</button>
+        <button onclick="showSection('chat')"><i class="fas fa-comments"></i> IA ASSISTENTE</button>
+        <button onclick="showSection('upload')"><i class="fas fa-upload"></i> UPLOAD PDF</button>
+      </aside>
+
+      <main class="main">
+        <section id="dashboard">
+          <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> DASHBOARD</h2>
+          <div class="cards">
+            <div class="card">
+              <h3><i class="fas fa-users"></i> USUÁRIOS ATIVOS</h3>
+              <p id="totalUsers">0</p>
+            </div>
+            <div class="card">
+              <h3><i class="fas fa-book"></i> TÍTULOS DISPONÍVEIS</h3>
+              <p id="totalBooks">0</p>
+            </div>
+            <div class="card">
+              <h3><i class="fas fa-comments"></i> CONSULTAS HOJE</h3>
+              <p id="totalChats">0</p>
+            </div>
+            <div class="card">
+              <h3><i class="fas fa-file-pdf"></i> PDFs PROCESSADOS</h3>
+              <p id="totalPDFs">0</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="users" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-users"></i> GERENCIAMENTO DE USUÁRIOS</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>NOME</th>
+                  <th>EMAIL</th>
+                  <th>STATUS</th>
+                  <th>AÇÕES</th>
+                </tr>
+              </thead>
+              <tbody id="userTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="books" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-book"></i> BIBLIOTECA DE LIVROS</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>CAPA</th>
+                  <th>TÍTULO</th>
+                  <th>AUTORES</th>
+                  <th>CATEGORIA</th>
+                  <th>AÇÕES</th>
+                </tr>
+              </thead>
+              <tbody id="bookTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="chat" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-comments"></i> IA ASSISTENTE</h2>
+          <div class="chat-panel">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-form">
+              <input type="text" id="chatInput" placeholder="CONSULTE A BASE DE DADOS DE FICÇÃO CIENTÍFICA..."/>
+              <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> ENVIAR</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="upload" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-upload"></i> UPLOAD DE NOVO LIVRO</h2>
+          <div class="upload-container">
+            <input type="text" id="uploadTitle" placeholder="TÍTULO DO LIVRO"/>
+            <input type="text" id="uploadAuthors" placeholder="AUTORES (SEPARADOS POR VÍRGULA)"/>
+            <input type="text" id="uploadCategory" placeholder="CATEGORIA (EX: CYBERPUNK, DISTOPIA, ETC.)"/>
+            <textarea id="uploadDescription" placeholder="DESCRIÇÃO DO LIVRO"></textarea>
+            <div class="file-input-container">
+              <div class="file-input-label">
+                <i class="fas fa-file-pdf"></i> SELECIONE UM ARQUIVO PDF
+              </div>
+              <input type="file" id="uploadFile" accept="application/pdf"/>
+            </div>
+            <button onclick="uploadBook()" class="action-btn">
+              <i class="fas fa-cloud-upload-alt"></i> ENVIAR PDF
+            </button>
+            <p id="uploadStatus"></p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="userView" style="display: none; width: 100%;">
+    <header>
+      <h1><i class="fas fa-book"></i> SCIFILEARN - BIBLIOTECA</h1>
+      <div class="user-info">
+        <i class="fas fa-user"></i>
+        <span id="currentUserRole">USUÁRIO</span>
+        <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> SAIR</button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="userSidebar">
+        <h2>SISTEMA</h2>
+        <button onclick="showUserSection('user-dashboard')"><i class="fas fa-home"></i> DASHBOARD</button>
+        <button onclick="showUserSection('user-books')"><i class="fas fa-book"></i> MINHA BIBLIOTECA</button>
+        <button onclick="showUserSection('user-chat')"><i class="fas fa-comments"></i> IA ASSISTENTE</button>
+      </aside>
+
+      <main class="main">
+        <section id="user-dashboard">
+          <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> TERMINAL DE USUÁRIO</h2>
+          <div class="user-dashboard">
+            <div class="user-card">
+              <h3><i class="fas fa-book"></i> RECOMENDAÇÕES</h3>
+              <div class="book-list" id="recommendations"></div>
+            </div>
+            <div class="user-card">
+              <h3><i class="fas fa-history"></i> LEITURAS RECENTES</h3>
+              <div class="book-list" id="recentReads"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="user-books" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-book"></i> MINHA BIBLIOTECA</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>CAPA</th>
+                  <th>TÍTULO</th>
+                  <th>AUTORES</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="userBookTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="user-chat" style="display:none;">
+          <h2 class="section-title"><i class="fas fa-comments"></i> IA ASSISTENTE</h2>
+          <div class="chat-panel">
+            <div class="chat-messages" id="userChatMessages"></div>
+            <div class="chat-form">
+              <input type="text" id="userChatInput" placeholder="CONSULTE A BASE DE DADOS DE FICÇÃO CIENTÍFICA..."/>
+              <button onclick="sendUserMessage()"><i class="fas fa-paper-plane"></i> ENVIAR</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+<script>
+let currentRole = null;
+let currentSection = 'dashboard';
+
+function setRole(role) {
+  currentRole = role;
+  document.getElementById('welcomeScreen').style.display = 'none';
+  
+  if (role === 'admin') {
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('userView').style.display = 'none';
+    document.getElementById('currentRole').textContent = 'ADMIN';
+    initAdmin();
+  } else {
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('userView').style.display = 'block';
+    document.getElementById('currentUserRole').textContent = 'USUÁRIO';
+    initUser();
+  }
+}
+
+function logout() {
+  document.getElementById('welcomeScreen').style.display = 'flex';
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('userView').style.display = 'none';
+  currentRole = null;
+  currentSection = 'dashboard';
+}
+
+function showSection(id) {
+  const sections = ['dashboard', 'users', 'books', 'chat', 'upload'];
+  sections.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) el.style.display = (s === id) ? 'block' : 'none';
+  });
+  
+  document.querySelectorAll('.sidebar button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick').includes(id)) {
+      btn.classList.add('active');
+    }
+  });
+  currentSection = id;
+}
+
+function showUserSection(id) {
+  const sections = ['user-dashboard', 'user-books', 'user-chat'];
+  sections.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) el.style.display = (s === id) ? 'block' : 'none';
+  });
+  
+  document.querySelectorAll('#userSidebar button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick').includes(id)) {
+      btn.classList.add('active');
+    }
+  });
+  currentSection = id;
+}
+
+let users = [
+  {id: 1, name: 'ALICE SILVA', email: 'alice@email.com', status: 'ATIVO'},
+  {id: 2, name: 'BOB SANTOS', email: 'bob@email.com', status: 'INATIVO'},
+  {id: 3, name: 'CAROL OLIVEIRA', email: 'carol@email.com', status: 'ATIVO'},
+  {id: 4, name: 'DAVID COSTA', email: 'david@email.com', status: 'ATIVO'}
+];
+
+let books = [
+  {id: 1, title: 'NEUROMANCER', authors: ['WILLIAM GIBSON'], category: 'CYBERPUNK', description: 'CLÁSSICO DA FICÇÃO CIENTÍFICA QUE DEFINIU O GÊNERO CYBERPUNK.'},
+  {id: 2, title: 'KOLLOCAÍNA', authors: ['KARIN BOYE'], category: 'DISTOPIA', description: 'DISTOPIA SUECA SOBRE UM MUNDO ONDE OS PENSAMENTOS SÃO MONITORADOS.'},
+  {id: 3, title: 'DUNA', authors: ['FRANK HERBERT'], category: 'SPACE OPERA', description: 'ÉPICA SAGA ESPACIAL SOBRE POLÍTICA, RELIGIÃO E ECOLOGIA.'},
+  {id: 4, title: 'FAHRENHEIT 451', authors: ['RAY BRADBURY'], category: 'DISTOPIA', description: 'DISTOPIA ONDE LIVROS SÃO PROIBIDOS E QUEIMADOS.'}
+];
+
+function renderUsers() {
+  const tbody = document.getElementById('userTable');
+  tbody.innerHTML = '';
+  users.forEach(u => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${u.id}</td>
+      <td>${u.name}</td>
+      <td>${u.email}</td>
+      <td><span style="color: ${u.status === 'ATIVO' ? 'var(--success)' : 'var(--danger)'}">${u.status}</span></td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editUser(${u.id})"><i class="fas fa-edit"></i> EDITAR</button>
+        <button class="action-btn delete-btn" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i> EXCLUIR</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderBooks() {
+  const tbody = document.getElementById('bookTable');
+  tbody.innerHTML = '';
+  books.forEach(b => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="book-cover">${b.title.substring(0, 3)}</div></td>
+      <td>${b.title}</td>
+      <td>${b.authors.join(', ')}</td>
+      <td>${b.category}</td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editBook(${b.id})"><i class="fas fa-edit"></i> EDITAR</button>
+        <button class="action-btn delete-btn" onclick="deleteBook(${b.id})"><i class="fas fa-trash"></i> EXCLUIR</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function editUser(id) {
+  alert(`EDITAR USUÁRIO ID: ${id}`);
+}
+
+function deleteUser(id) {
+  if (confirm('CONFIRMAR EXCLUSÃO DESTE USUÁRIO?')) {
+    users = users.filter(u => u.id !== id);
+    renderUsers();
+    document.getElementById('totalUsers').innerText = users.length;
+  }
+}
+
+function editBook(id) {
+  alert(`EDITAR LIVRO ID: ${id}`);
+}
+
+function deleteBook(id) {
+  if (confirm('CONFIRMAR EXCLUSÃO DESTE LIVRO?')) {
+    books = books.filter(b => b.id !== id);
+    renderBooks();
+    document.getElementById('totalBooks').innerText = books.length;
+  }
+}
+
+function appendMessage(text, who = 'bot', target = 'chatMessages') {
+  const messagesContainer = document.getElementById(target);
+  const m = document.createElement('div');
+  m.className = `msg ${who}`;
+  m.innerText = text;
+  messagesContainer.appendChild(m);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  appendMessage(text, 'user');
+  input.value = '';
+  
+  appendMessage("CONSULTANDO MISTRAL E OLLAMA...", "bot");
+  
+  try {
+    const res = await fetch("http://localhost:8080/api/ai/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+    });
+    
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
+    const data = await res.json();
+
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.removeChild(messagesContainer.lastChild);
+    appendMessage(data.answer, "bot");
+  } catch (err) {
+
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.removeChild(messagesContainer.lastChild);
+    appendMessage(`ERRO AO CONSULTAR IA: ${err.message}`, "bot");
+  }
+}
+
+async function sendUserMessage() {
+  const input = document.getElementById('userChatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  
+  appendMessage(text, 'user', 'userChatMessages');
+  input.value = '';
+  
+  appendMessage("CONSULTANDO MISTRAL E OLLAMA...", "bot", "userChatMessages");
+  
+  try {
+    const res = await fetch("http://localhost:8080/api/ai/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+    });
+    
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
+    const data = await res.json();
+
+    const messagesContainer = document.getElementById('userChatMessages');
+    messagesContainer.removeChild(messagesContainer.lastChild);
+    appendMessage(data.answer, "bot", "userChatMessages");
+  } catch (err) {
+
+    const messagesContainer = document.getElementById('userChatMessages');
+    messagesContainer.removeChild(messagesContainer.lastChild);
+    appendMessage(`ERRO AO CONSULTAR IA: ${err.message}`, "bot", "userChatMessages");
+  }
+}
+
+function uploadBook() {
+  const title = document.getElementById('uploadTitle').value.trim();
+  const authors = document.getElementById('uploadAuthors').value.trim();
+  const category = document.getElementById('uploadCategory').value.trim();
+  const description = document.getElementById('uploadDescription').value.trim();
+  const file = document.getElementById('uploadFile').files[0];
+  const status = document.getElementById('uploadStatus');
+  
+  if (!title || !authors || !category || !file) {
+    status.innerText = 'PREENCHA TODOS OS CAMPOS OBRIGATÓRIOS.';
+    status.style.color = 'var(--danger)';
+    return;
+  }
+  
+  status.innerText = 'PROCESSANDO...';
+  status.style.color = 'var(--accent)';
+  
+  setTimeout(() => {
+    status.innerText = 'PDF PROCESSADO COM SUCESSO!';
+    status.style.color = 'var(--success)';
+    
+    const newBook = {
+      id: books.length + 1,
+      title,
+      authors: authors.split(',').map(s => s.trim()),
+      category,
+      description
+    };
+    books.push(newBook);
+    renderBooks();
+    document.getElementById('totalBooks').innerText = books.length;
+    
+    document.getElementById('uploadTitle').value = '';
+    document.getElementById('uploadAuthors').value = '';
+    document.getElementById('uploadCategory').value = '';
+    document.getElementById('uploadDescription').value = '';
+    document.getElementById('uploadFile').value = '';
+  }, 1200);
+}
+
+function renderUserBooks() {
+  const tbody = document.getElementById('userBookTable');
+  tbody.innerHTML = '';
+  books.forEach(b => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="book-cover">${b.title.substring(0, 3)}</div></td>
+      <td>${b.title}</td>
+      <td>${b.authors.join(', ')}</td>
+      <td><span style="color: var(--success)">DISPONÍVEL</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderRecommendations() {
+  const container = document.getElementById('recommendations');
+  container.innerHTML = '';
+  
+  books.slice(0, 3).forEach(book => {
+    const div = document.createElement('div');
+    div.className = 'book-item';
+    div.innerHTML = `
+      <div class="book-cover">${book.title.substring(0, 3)}</div>
+      <div class="book-info">
+        <h4>${book.title}</h4>
+        <p>${book.authors.join(', ')}</p>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function renderRecentReads() {
+  const container = document.getElementById('recentReads');
+  container.innerHTML = '';
+  
+  books.slice(-2).forEach(book => {
+    const div = document.createElement('div');
+    div.className = 'book-item';
+    div.innerHTML = `
+      <div class="book-cover">${book.title.substring(0, 3)}</div>
+      <div class="book-info">
+        <h4>${book.title}</h4>
+        <p>${book.authors.join(', ')}</p>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function initAdmin() {
+  document.getElementById('totalUsers').innerText = users.length;
+  document.getElementById('totalBooks').innerText = books.length;
+  document.getElementById('totalChats').innerText = 24;
+  document.getElementById('totalPDFs').innerText = 12;
+  renderUsers();
+  renderBooks();
+  showSection('dashboard');
+  
+  document.querySelector('.sidebar button').classList.add('active');
+}
+
+function initUser() {
+  renderUserBooks();
+  renderRecommendations();
+  renderRecentReads();
+  showUserSection('user-dashboard');
+  
+  document.querySelector('#userSidebar button').classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const adminForm = document.querySelector('#chat form');
+  const userForm = document.querySelector('#user-chat form');
+  
+  if (adminForm) {
+    adminForm.addEventListener('submit', e => {
+      e.preventDefault();
+      sendMessage();
+    });
+  }
+  
+  if (userForm) {
+    userForm.addEventListener('submit', e => {
+      e.preventDefault();
+      sendUserMessage();
+    });
+  }
+  
+  if (document.querySelector('.sidebar button')) {
+    document.querySelector('.sidebar button').classList.add('active');
+  }
+});
+
+</script>
+
+</body>
+</html>
