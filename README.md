@@ -46,6 +46,10 @@ O projeto é facilmente executável via Docker Compose, permitindo subir banco, 
 
 <img width="1196" height="650" alt="image" src="https://github.com/user-attachments/assets/d1e41792-b9d4-4820-b054-ea8ec76cdb6e" />
 
+<img width="1204" height="510" alt="image" src="https://github.com/user-attachments/assets/b3b24fcb-6f9d-4f22-92e8-3bcbc6ede3ab" />
+
+<img width="1196" height="616" alt="image" src="https://github.com/user-attachments/assets/7ba99736-6dad-40c0-b2f0-1952592fcf41" />
+
 ---
 
 # Como utilizar o BackEnd
