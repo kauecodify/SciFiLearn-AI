@@ -34,7 +34,7 @@ O projeto é facilmente executável via Docker Compose, permitindo subir banco, 
 
 # Estrutura do Projeto
 
-<img width="486" height="327" alt="image" src="https://github.com/user-attachments/assets/b122e259-8abe-4317-a88e-ed733e5114f8" />
+<img width="375" height="351" alt="image" src="https://github.com/user-attachments/assets/01eb6a94-7573-4640-935c-5a37b679e511" />
 
 ---
 
