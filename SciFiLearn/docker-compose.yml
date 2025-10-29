@@ -1,40 +1,36 @@
-version: '3.9'
-
+version: '3.8'
 services:
   postgres:
-    image: postgres:16
+    image: postgres:15
     container_name: scifilearn-db
     environment:
-      POSTGRES_USER: scifi_user
-      POSTGRES_PASSWORD: scifi_pass
       POSTGRES_DB: scifilearn
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   backend:
     build: ./backend-springboot
     container_name: scifilearn-backend
+    ports:
+      - "8080:8080"
     depends_on:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/scifilearn
-      SPRING_DATASOURCE_USERNAME: scifi_user
-      SPRING_DATASOURCE_PASSWORD: scifi_pass
-      OLLAMA_API_URL: http://host.docker.internal:11434
-    ports:
-      - "8080:8080"
-    restart: always
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
 
   frontend:
     build: ./frontend-angular
     container_name: scifilearn-frontend
-    depends_on:
-      - backend
     ports:
       - "4200:80"
-    restart: always
+    depends_on:
+      - backend
 
 volumes:
-  postgres_data:
+  pgdata:
