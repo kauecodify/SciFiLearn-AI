@@ -1,33 +1,27 @@
-version: '3.9'
+version: "3.9"
 
 services:
   backend:
     build: ./backend-springboot
-    container_name: scifilearn-backend
+    container_name: scifilearn_backend
     ports:
       - "8080:8080"
     environment:
-      - JAVA_OPTS=-Xmx512m
-    depends_on:
-      - mistral
-      - ollama
+      - mistral.api.key=${MISTRAL_API_KEY}
+      - mistral.api.url=https://api.mistral.ai/v1/chat/completions
+    networks:
+      - scifinet
 
   frontend:
-    build: ./frontend
-    container_name: scifilearn-frontend
+    image: nginx:alpine
+    container_name: scifilearn_frontend
+    volumes:
+      - ./frontend-html:/usr/share/nginx/html:ro
     ports:
       - "80:80"
-    depends_on:
-      - backend
+    networks:
+      - scifinet
 
-  mistral:
-    image: ghcr.io/mistralai/mistral:latest
-    container_name: mistral
-    ports:
-      - "5005:5005"
-
-  ollama:
-    image: ghcr.io/ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
+networks:
+  scifinet:
+    driver: bridge
